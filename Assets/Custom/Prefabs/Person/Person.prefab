@@ -70,7 +70,7 @@ MonoBehaviour:
   dynamicTargetsMinPos: {x: -8, y: 0, z: -8}
   dynamicTargetsMaxPos: {x: 8, y: 0, z: 8}
   dynamicTargetsCount: 10
-  targetPositionThreshold: 0.5
+  targetPositionThreshold: 0.1
   speed: 1
   rotationSpeed: 2
 --- !u!1001 &6162846090992710926

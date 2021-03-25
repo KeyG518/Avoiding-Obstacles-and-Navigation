@@ -69,7 +69,7 @@ public class PersonController : MonoBehaviour
             if (candidateDistance > maxCandidateDistance)
             {
                 maxCandidateDistance = candidateDistance;
-                bestTargetPosition = new Vector3(viewHit.transform.position.x, transform.position.y, viewHit.transform.position.z);
+                bestTargetPosition = new Vector3(viewHit.point.x, transform.position.y, viewHit.point.z);
 
                 if (maxCandidateDistance > candidateDistanceThreshold)
                 {

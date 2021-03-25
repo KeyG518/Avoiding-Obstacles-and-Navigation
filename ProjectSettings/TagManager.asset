@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Static Obstacle
   - Person
+  - Static Boundary
+  - Static Obstacle
+  - Final Goal
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public class PersonManager : MonoBehaviour
     public Vector3 personMinPos;
     public Vector3 personMaxPos;
     public int personCount = 10;
+    public float personSpeedVariation = 0.2f;
 
 
     void Start()
@@ -28,23 +29,14 @@ public class PersonManager : MonoBehaviour
         PersonController personController;
         Vector3 personPosition;
 
-        for (int i = 0; i < personCount; i++) {
-            initializePerson(0.2f);
+        for (int personIndex = 0; personIndex < personCount; personIndex++)
+        {
+            personInstance = GameObject.Instantiate(person);
+            personController = personInstance.GetComponent<PersonController>();
+            personPosition = new Vector3(Random.Range(personMinPos.x, personMaxPos.x), personInstance.transform.position.y, Random.Range(personMinPos.z, personMaxPos.z));
+
+            personController.setTransformPosition(personPosition);
+            personController.setSpeed(Random.Range(personController.speed - personSpeedVariation, personController.speed + personSpeedVariation));
         }
-    }
-
-
-    private void initializePerson(float speedVariation) {
-        GameObject personInstance = GameObject.Instantiate(person);
-
-        Vector3 personPosition = new Vector3(
-            Random.Range(personMinPos.x, personMaxPos.x),
-            personInstance.transform.position.y,
-            Random.Range(personMinPos.z, personMaxPos.z));
-        personInstance.transform.position = personPosition;
-
-        PersonController personController = personInstance.GetComponent(typeof(PersonController)) as PersonController;
-        personController.speed = Random.Range(personController.speed - speedVariation, personController.speed + speedVariation);
-        personController.useDynamicTargets = false;
     }
 }

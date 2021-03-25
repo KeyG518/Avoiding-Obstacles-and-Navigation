@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2205450459102629132, guid: 7c06215d4b9d16be7bea7e77092a9fb8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2770083565283268379, guid: 7c06215d4b9d16be7bea7e77092a9fb8,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -16,11 +21,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cube (Small)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6528754999718898534, guid: 7c06215d4b9d16be7bea7e77092a9fb8,
-        type: 3}
-      propertyPath: m_TagString
-      value: Static Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 9137380697426197987, guid: 7c06215d4b9d16be7bea7e77092a9fb8,
         type: 3}
@@ -92,5 +92,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -1467644221067703336, guid: 7c06215d4b9d16be7bea7e77092a9fb8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7c06215d4b9d16be7bea7e77092a9fb8, type: 3}

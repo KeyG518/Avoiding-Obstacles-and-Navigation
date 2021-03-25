@@ -28,14 +28,11 @@ public class ObstacleManager : MonoBehaviour
         Vector3 obstaclePosition;
         int randomIndex;
 
-        for (int i = 0; i < obstacleCount; i++) {
+        for (int obstacleIndex = 0; obstacleIndex < obstacleCount; obstacleIndex++)
+        {
             randomIndex = Random.Range(0, obstacles.Length);
             obstacleInstance = GameObject.Instantiate(obstacles[randomIndex]);
-            obstaclePosition = new Vector3(
-                Random.Range(obstacleMinPos.x, obstacleMaxPos.x),
-                obstacleInstance.transform.position.y,
-                Random.Range(obstacleMinPos.z, obstacleMaxPos.z));
-
+            obstaclePosition = new Vector3(Random.Range(obstacleMinPos.x, obstacleMaxPos.x), obstacleInstance.transform.position.y, Random.Range(obstacleMinPos.z, obstacleMaxPos.z));
             obstacleInstance.transform.position = obstaclePosition;
         }
     }

@@ -5,27 +5,27 @@ using UnityEngine;
 
 public class PersonController : MonoBehaviour
 {
-    public GameObject[] targets;
-    public bool useDynamicTargets = true;
-    public Vector3 dynamicTargetsMinPos;
-    public Vector3 dynamicTargetsMaxPos;
-    public int dynamicTargetsCount = 10;
-    public float targetPositionThreshold = 1.0f;
+    public float boundaryDistanceThreshold = 1.0f;
+    public float obstacleDistanceThreshold = 1.0f;
+    public float targetDistanceThreshold = 1.0f;
     public float speed = 1.0f;
     public float rotationSpeed = 1.0f;
 
-    private int currentTargetIndex;
-    private GameObject[] dynamicTargets;
+    private float candidateAngleOffset, candidateDistanceThreshold;
+    private float maxRaycastHitDistance, raycastSphereRadius;
+    private bool isTargetLocked;
+    private Vector3 currentTargetPosition;
 
 
     void Start()
     {
-        currentTargetIndex = 0;
+        candidateAngleOffset = 10.0f;
+        candidateDistanceThreshold = 5.0f;
+        maxRaycastHitDistance = 50.0f;
+        raycastSphereRadius = 0.5f;
 
-        if (useDynamicTargets) {
-            dynamicTargets = new GameObject[dynamicTargetsCount];
-            initializeDynamicTargets();
-        }
+        currentTargetPosition = getNextTargetPosition(transform);
+        isTargetLocked = false;
     }
 
 
@@ -35,53 +35,79 @@ public class PersonController : MonoBehaviour
     }
 
 
-    private void initializeDynamicTargets()
+    public void setSpeed(float speed)
     {
-        GameObject dynamicTarget;
-        Vector3 dynamicTargetPosition;
+        this.speed = speed;
+    }
 
-        for (int targetIndex = 0; targetIndex < dynamicTargetsCount; targetIndex++) {
-            dynamicTarget = new GameObject("Dynamic Movement Target");
-            dynamicTargetPosition = new Vector3(
-                Random.Range(dynamicTargetsMinPos.x, dynamicTargetsMaxPos.x),
-                Random.Range(dynamicTargetsMinPos.y, dynamicTargetsMaxPos.y),
-                Random.Range(dynamicTargetsMinPos.z, dynamicTargetsMaxPos.z));
-            
-            dynamicTarget.transform.position = dynamicTargetPosition;
-            dynamicTargets[targetIndex] = dynamicTarget;
+
+    public void setTransformPosition(Vector3 position)
+    {
+        transform.position = position;
+    }
+
+
+    private Vector3 getNextTargetPosition(Transform previousTarget)
+    {
+        int candidateCount = (int) Mathf.Floor(360.0f / candidateAngleOffset);
+        float candidateAngle = 0.0f, candidateDistance = 0.0f, maxCandidateDistance = 0.0f;
+        Vector3 bestTargetPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 currentTargetRotation;
+        RaycastHit viewHit;
+
+        for (int candidateIndex = 0; candidateIndex < candidateCount; candidateIndex++)
+        {
+            candidateDistance = 0.0f;
+            currentTargetRotation = Quaternion.AngleAxis(candidateAngle, previousTarget.up) * previousTarget.forward;
+
+            if (Physics.SphereCast(previousTarget.transform.position, raycastSphereRadius, currentTargetRotation, out viewHit, maxRaycastHitDistance) &&
+                (viewHit.transform.CompareTag("Static Obstacle") || viewHit.transform.CompareTag("Static Boundary")))
+            {
+                candidateDistance = viewHit.distance;
+            }
+
+            if (candidateDistance > maxCandidateDistance)
+            {
+                maxCandidateDistance = candidateDistance;
+                bestTargetPosition = new Vector3(viewHit.transform.position.x, transform.position.y, viewHit.transform.position.z);
+
+                if (maxCandidateDistance > candidateDistanceThreshold)
+                {
+                    break;
+                }
+            }
+
+            candidateAngle += candidateAngleOffset;
         }
+
+        return bestTargetPosition;
     }
 
 
     private void moveToTarget()
     {
-        GameObject currentTarget = useDynamicTargets ? dynamicTargets[currentTargetIndex] : targets[currentTargetIndex];
-
-        if (Vector3.Distance(transform.position, currentTarget.transform.position) < targetPositionThreshold)
+        if (Vector3.Distance(transform.position, currentTargetPosition) < targetDistanceThreshold)
         {
-            currentTargetIndex++;
-            currentTargetIndex %= useDynamicTargets ? dynamicTargetsCount : targets.Length;
+            currentTargetPosition = getNextTargetPosition(transform);
         }
 
-        Vector3 targetPosition = new Vector3(currentTarget.transform.position.x, transform.position.y, currentTarget.transform.position.z);
-        Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
+        RaycastHit viewHit;
+
+        if (!isTargetLocked && Physics.SphereCast(transform.position, raycastSphereRadius, transform.forward, out viewHit, maxRaycastHitDistance) &&
+            ((viewHit.transform.CompareTag("Static Boundary") && viewHit.distance < boundaryDistanceThreshold) ||
+            (viewHit.transform.CompareTag("Static Obstacle") && viewHit.distance < obstacleDistanceThreshold)))
+        {
+            currentTargetPosition = getNextTargetPosition(transform);
+            isTargetLocked = true;
+        }
+        else
+        {
+            isTargetLocked = false;
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(currentTargetPosition - transform.position);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         transform.position += transform.forward * speed * Time.deltaTime;
-
-        Debug.DrawRay(transform.position, transform.forward, Color.red, 0.1f);
-
-        RaycastHit viewHit;
-        if (Physics.Raycast(transform.position, transform.forward, out viewHit, 20.0f))
-        {
-            if (viewHit.transform.CompareTag("Static Obstacle"))
-            {
-                if (viewHit.distance < 2.0f)
-                {
-                    // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, 180.0f, transform.rotation.z), rotationSpeed * Time.deltaTime);
-                }
-                Debug.Log(viewHit.distance);
-            }
-        }
     }
 }

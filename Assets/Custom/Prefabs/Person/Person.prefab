@@ -12,10 +12,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!136 &433653947
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -26,7 +26,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 1
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -61,18 +61,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72b96eaeaa4ba420b0e00b92b64082b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 2072555176365893862, guid: 453b30a07aff4d73aaf8a5aa7650e639, type: 3}
-  - {fileID: 925176491941802304, guid: 1ef6fcd7c6ab7fa7fb535fc2641ca178, type: 3}
-  - {fileID: 830604525890179965, guid: aefcfcfa1c0a8e7af8f17b5c69da911b, type: 3}
-  - {fileID: 2159088997040340785, guid: 16e73d08356ad27e9848fc01549d25c8, type: 3}
-  useDynamicTargets: 1
-  dynamicTargetsMinPos: {x: -8, y: 0, z: -8}
-  dynamicTargetsMaxPos: {x: 8, y: 0, z: 8}
-  dynamicTargetsCount: 10
-  targetPositionThreshold: 0.1
+  boundaryDistanceThreshold: 2
+  obstacleDistanceThreshold: 1
+  targetDistanceThreshold: 0.5
   speed: 1
-  rotationSpeed: 2
+  rotationSpeed: 3
 --- !u!1001 &6162846090992710926
 PrefabInstance:
   m_ObjectHideFlags: 0

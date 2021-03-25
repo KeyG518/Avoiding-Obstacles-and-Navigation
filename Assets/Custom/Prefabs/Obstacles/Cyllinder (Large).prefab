@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 255726303924579349, guid: 5cbc01696912b05c7a9d02bc14c6e1cb,
         type: 3}
       propertyPath: m_Name
-      value: Large Cylinder
+      value: Cyllinder (Large)
       objectReference: {fileID: 0}
     - target: {fileID: 2280769450513128006, guid: 5cbc01696912b05c7a9d02bc14c6e1cb,
         type: 3}

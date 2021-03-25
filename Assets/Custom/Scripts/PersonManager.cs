@@ -13,7 +13,7 @@ public class PersonManager : MonoBehaviour
 
     void Start()
     {
-        generatePeople();
+        initializePeople();
     }
 
 
@@ -22,7 +22,7 @@ public class PersonManager : MonoBehaviour
     }
 
 
-    private void generatePeople()
+    private void initializePeople()
     {
         GameObject personInstance;
         PersonController personController;
@@ -45,5 +45,6 @@ public class PersonManager : MonoBehaviour
 
         PersonController personController = personInstance.GetComponent(typeof(PersonController)) as PersonController;
         personController.speed = Random.Range(personController.speed - speedVariation, personController.speed + speedVariation);
+        personController.useDynamicTargets = false;
     }
 }

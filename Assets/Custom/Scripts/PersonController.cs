@@ -63,11 +63,25 @@ public class PersonController : MonoBehaviour
             currentTargetIndex %= useDynamicTargets ? dynamicTargetsCount : targets.Length;
         }
 
-
         Vector3 targetPosition = new Vector3(currentTarget.transform.position.x, transform.position.y, currentTarget.transform.position.z);
         Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         transform.position += transform.forward * speed * Time.deltaTime;
+
+        Debug.DrawRay(transform.position, transform.forward, Color.red, 0.1f);
+
+        RaycastHit viewHit;
+        if (Physics.Raycast(transform.position, transform.forward, out viewHit, 20.0f))
+        {
+            if (viewHit.transform.CompareTag("Static Obstacle"))
+            {
+                if (viewHit.distance < 2.0f)
+                {
+                    // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, 180.0f, transform.rotation.z), rotationSpeed * Time.deltaTime);
+                }
+                Debug.Log(viewHit.distance);
+            }
+        }
     }
 }

@@ -15,7 +15,12 @@ PrefabInstance:
     - target: {fileID: 6528754999718898534, guid: 7c06215d4b9d16be7bea7e77092a9fb8,
         type: 3}
       propertyPath: m_Name
-      value: small cube
+      value: Cube (Small)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528754999718898534, guid: 7c06215d4b9d16be7bea7e77092a9fb8,
+        type: 3}
+      propertyPath: m_TagString
+      value: Static Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 9137380697426197987, guid: 7c06215d4b9d16be7bea7e77092a9fb8,
         type: 3}

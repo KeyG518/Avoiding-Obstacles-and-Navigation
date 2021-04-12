@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
 {
-    public GameObject player, finalGoal;
     public GameObject[] obstacles;
     public Vector3 obstacleMinPos;
     public Vector3 obstacleMaxPos;
@@ -49,6 +48,12 @@ public class ObstacleManager : MonoBehaviour
 
     private bool isPositionValid(Vector3 position, float distanceThreshold)
     {
-        return Vector3.Distance(position, player.transform.position) > distanceThreshold && Vector3.Distance(position, finalGoal.transform.position) > distanceThreshold;
+        GameObject finalGoal = GameObject.FindWithTag("Final Goal");
+        GameObject player = GameObject.FindWithTag("Player");
+
+        bool isValid =  Vector3.Distance(position, finalGoal.transform.position) > distanceThreshold;
+        isValid = isValid && Vector3.Distance(position, player.transform.position) > distanceThreshold;
+
+        return isValid;
     }
 }

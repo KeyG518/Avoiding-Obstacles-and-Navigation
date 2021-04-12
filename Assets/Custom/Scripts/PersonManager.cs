@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PersonManager : MonoBehaviour
 {
-    public GameObject player, finalGoal, person;
+    public GameObject person;
     public Vector3 personMinPos;
     public Vector3 personMaxPos;
     public int personCount = 10;
@@ -50,6 +50,19 @@ public class PersonManager : MonoBehaviour
 
     private bool isPositionValid(Vector3 position, float distanceThreshold)
     {
-        return Vector3.Distance(position, player.transform.position) > distanceThreshold && Vector3.Distance(position, finalGoal.transform.position) > distanceThreshold;
+        GameObject finalGoal = GameObject.FindWithTag("Final Goal");
+        GameObject player = GameObject.FindWithTag("Player");
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Static Obstacle");
+
+        bool isValid =  Vector3.Distance(position, finalGoal.transform.position) > distanceThreshold;
+        isValid = isValid && Vector3.Distance(position, player.transform.position) > distanceThreshold;
+
+        foreach (GameObject obstacle in obstacles)
+        {
+            if (!isValid) break;
+            isValid = isValid && Vector3.Distance(position, obstacle.transform.position) > distanceThreshold;
+        }
+
+        return isValid;
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -264,6 +264,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1533996597465397637, guid: 5efd9c475c84e86eab1421131a1b97c6,
     type: 3}
   m_PrefabInstance: {fileID: 1533996597817899608}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &530141528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8093402466664673230, guid: a0b50a2bc7ff02907a19035a95c16ab9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8093402467528653277}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &560803585 stripped
 Transform:
@@ -1060,6 +1066,12 @@ MonoBehaviour:
   TfPublishingFrequency: 10
   ParentFrame: {fileID: 0}
   ChildFrame: {fileID: 1595495013}
+--- !u!1 &1816972312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8753101123923135185, guid: 7eff1578132243c24a41db94d126abc3,
+    type: 3}
+  m_PrefabInstance: {fileID: 433960140}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2066117641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,6 +1154,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 865941431}
     m_Modifications:
+    - target: {fileID: 953006221594724443, guid: d7164a96e791b1b6e88234b8e4124ad9,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1816972312}
+    - target: {fileID: 953006221594724443, guid: d7164a96e791b1b6e88234b8e4124ad9,
+        type: 3}
+      propertyPath: finalGoal
+      value: 
+      objectReference: {fileID: 530141528}
     - target: {fileID: 953006221594724443, guid: d7164a96e791b1b6e88234b8e4124ad9,
         type: 3}
       propertyPath: personCount
@@ -1236,6 +1258,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 865941431}
     m_Modifications:
+    - target: {fileID: 1257695243315649657, guid: 1b7216e83143c33c886fe7a05d454126,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1816972312}
+    - target: {fileID: 1257695243315649657, guid: 1b7216e83143c33c886fe7a05d454126,
+        type: 3}
+      propertyPath: finalGoal
+      value: 
+      objectReference: {fileID: 530141528}
     - target: {fileID: 1257695243315649657, guid: 1b7216e83143c33c886fe7a05d454126,
         type: 3}
       propertyPath: obstacleCount

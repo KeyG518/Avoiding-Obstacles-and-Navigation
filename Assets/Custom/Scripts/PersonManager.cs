@@ -14,7 +14,7 @@ public class PersonManager : MonoBehaviour
 
     void Start()
     {
-        initializePeople();
+        InitializePeople();
     }
 
 
@@ -23,7 +23,7 @@ public class PersonManager : MonoBehaviour
     }
 
 
-    private float getFlatDistance(Vector3 vectorA, Vector3 vectorB)
+    private float GetFlatDistance(Vector3 vectorA, Vector3 vectorB)
     {
         vectorA.y = 0;
         vectorB.y = 0;
@@ -32,7 +32,7 @@ public class PersonManager : MonoBehaviour
     }
 
 
-    private void initializePeople()
+    private void InitializePeople()
     {
         GameObject personInstance;
         PersonController personController;
@@ -49,27 +49,27 @@ public class PersonManager : MonoBehaviour
                 positionZ = Random.Range(personMinPos.z, personMaxPos.z);
                 personPosition = new Vector3(positionX, personInstance.transform.position.y, positionZ);
             }
-            while (!isPositionValid(personPosition, 2.0f));
+            while (!IsPositionValid(personPosition, 2.0f));
 
-            personController.setTransformPosition(personPosition);
-            personController.setSpeed(Random.Range(personController.speed - personSpeedVariation, personController.speed + personSpeedVariation));
+            personController.SetTransformPosition(personPosition);
+            personController.SetSpeed(Random.Range(personController.speed - personSpeedVariation, personController.speed + personSpeedVariation));
         }
     }
 
 
-    private bool isPositionValid(Vector3 position, float distanceThreshold)
+    private bool IsPositionValid(Vector3 position, float distanceThreshold)
     {
         GameObject finalGoal = GameObject.FindWithTag("Final Goal");
         GameObject player = GameObject.FindWithTag("Player");
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Static Obstacle");
 
-        bool isValid =  getFlatDistance(position, finalGoal.transform.position) > distanceThreshold;
-        isValid = isValid && getFlatDistance(position, player.transform.position) > distanceThreshold;
+        bool isValid =  GetFlatDistance(position, finalGoal.transform.position) > distanceThreshold;
+        isValid = isValid && GetFlatDistance(position, player.transform.position) > distanceThreshold;
 
         foreach (GameObject obstacle in obstacles)
         {
             if (!isValid) break;
-            isValid = isValid && getFlatDistance(position, obstacle.transform.position) > distanceThreshold;
+            isValid = isValid && GetFlatDistance(position, obstacle.transform.position) > distanceThreshold;
         }
 
         return isValid;

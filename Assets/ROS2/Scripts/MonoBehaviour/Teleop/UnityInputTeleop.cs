@@ -42,6 +42,16 @@ public class UnityInputTeleop : MonoBehaviourRosNode
         }
     }
 
+    public void MoveAngular(float k)
+    {
+        cmdVelMsg.Angular.Z = -k * MaxRotationalVelocity;
+    }
+
+    public void MoveLinear(float k)
+    {
+        cmdVelMsg.Linear.X = k * MaxForwardVelocity;
+    }
+
     private void Update()
     {
         cmdVelMsg.Linear.X = Input.GetAxis("Vertical") * MaxForwardVelocity;

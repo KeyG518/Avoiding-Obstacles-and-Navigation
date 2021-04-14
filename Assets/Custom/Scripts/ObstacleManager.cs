@@ -13,7 +13,7 @@ public class ObstacleManager : MonoBehaviour
 
     void Start()
     {
-        initializeObstacles();
+        InitializeObstacles();
     }
 
 
@@ -22,7 +22,7 @@ public class ObstacleManager : MonoBehaviour
     }
 
 
-    private float getFlatDistance(Vector3 vectorA, Vector3 vectorB)
+    private float GetFlatDistance(Vector3 vectorA, Vector3 vectorB)
     {
         vectorA.y = 0;
         vectorB.y = 0;
@@ -31,7 +31,7 @@ public class ObstacleManager : MonoBehaviour
     }
 
 
-    private void initializeObstacles()
+    private void InitializeObstacles()
     {
         GameObject obstacleInstance;
         Vector3 obstaclePosition;
@@ -48,20 +48,20 @@ public class ObstacleManager : MonoBehaviour
                 positionZ = Random.Range(obstacleMinPos.z, obstacleMaxPos.z);
                 obstaclePosition = new Vector3(positionX, obstacleInstance.transform.position.y, positionZ);
             }
-            while (!isPositionValid(obstaclePosition, 2.0f));
+            while (!IsPositionValid(obstaclePosition, 2.0f));
 
             obstacleInstance.transform.position = obstaclePosition;
         }
     }
 
 
-    private bool isPositionValid(Vector3 position, float distanceThreshold)
+    private bool IsPositionValid(Vector3 position, float distanceThreshold)
     {
         GameObject finalGoal = GameObject.FindWithTag("Final Goal");
         GameObject player = GameObject.FindWithTag("Player");
 
-        bool isValid =  getFlatDistance(position, finalGoal.transform.position) > distanceThreshold;
-        isValid = isValid && getFlatDistance(position, player.transform.position) > distanceThreshold;
+        bool isValid =  GetFlatDistance(position, finalGoal.transform.position) > distanceThreshold;
+        isValid = isValid && GetFlatDistance(position, player.transform.position) > distanceThreshold;
 
         return isValid;
     }

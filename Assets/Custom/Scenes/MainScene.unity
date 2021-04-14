@@ -748,7 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NodeName: unity_teleop
   CommandVelocityTopic: cmd_vel
-  MaxForwardVelocity: 1
+  MaxForwardVelocity: 1.5
   MaxSidewaysVelocity: 1
   MaxRotationalVelocity: 3
   PublishingFrequency: 20

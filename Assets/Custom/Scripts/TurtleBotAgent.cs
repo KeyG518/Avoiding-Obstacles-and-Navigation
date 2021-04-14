@@ -8,17 +8,21 @@ using Unity.MLAgents.Actuators;
 
 public class TurtleBotAgent : Agent
 {
-    private Vector3 spawnPosition;
     private bool didHitBoundary, didHitObstacle, didHitPerson, didReachGoal;
+    private Vector3 spawnPosition;
+    private UnityInputTeleop unityRosInput;
 
 
     void Start()
     {
-        spawnPosition = this.transform.position;
+        GameObject rosInterface = GameObject.Find("RosInterface");
+        unityRosInput = rosInterface.GetComponent<UnityInputTeleop>();
+
         didHitBoundary = false;
         didHitObstacle = false;
         didHitPerson = false;
         didReachGoal = false;
+        spawnPosition = this.transform.position;
     }
 
 
@@ -39,11 +43,11 @@ public class TurtleBotAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        this.transform.position = spawnPosition;
         didHitBoundary = false;
         didHitObstacle = false;
         didHitPerson = false;
         didReachGoal = false;
+        this.transform.position = spawnPosition;
     }
 
 

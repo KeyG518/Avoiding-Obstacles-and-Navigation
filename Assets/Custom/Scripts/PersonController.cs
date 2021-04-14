@@ -24,30 +24,30 @@ public class PersonController : MonoBehaviour
         maxRaycastHitDistance = 50.0f;
         raycastSphereRadius = 0.5f;
 
-        currentTargetPosition = getNextTargetPosition(transform);
+        currentTargetPosition = GetNextTargetPosition(transform);
         isTargetLocked = false;
     }
 
 
     void Update()
     {
-        moveToTarget();
+        MoveToTarget();
     }
 
 
-    public void setSpeed(float speed)
+    public void SetSpeed(float speed)
     {
         this.speed = speed;
     }
 
 
-    public void setTransformPosition(Vector3 position)
+    public void SetTransformPosition(Vector3 position)
     {
         transform.position = position;
     }
 
 
-    private Vector3 getNextTargetPosition(Transform previousTarget)
+    private Vector3 GetNextTargetPosition(Transform previousTarget)
     {
         int candidateCount = (int) Mathf.Floor(360.0f / candidateAngleOffset);
         float candidateAngle = 0.0f, candidateDistance = 0.0f, maxCandidateDistance = 0.0f;
@@ -84,11 +84,11 @@ public class PersonController : MonoBehaviour
     }
 
 
-    private void moveToTarget()
+    private void MoveToTarget()
     {
         if (Vector3.Distance(transform.position, currentTargetPosition) < targetDistanceThreshold)
         {
-            currentTargetPosition = getNextTargetPosition(transform);
+            currentTargetPosition = GetNextTargetPosition(transform);
         }
 
         RaycastHit viewHit;
@@ -97,7 +97,7 @@ public class PersonController : MonoBehaviour
             ((viewHit.transform.CompareTag("Static Boundary") && viewHit.distance < boundaryDistanceThreshold) ||
             (viewHit.transform.CompareTag("Static Obstacle") && viewHit.distance < obstacleDistanceThreshold)))
         {
-            currentTargetPosition = getNextTargetPosition(transform);
+            currentTargetPosition = GetNextTargetPosition(transform);
             isTargetLocked = true;
         }
         else

@@ -10,9 +10,12 @@ public class ObstacleManager : MonoBehaviour
     public Vector3 obstacleMaxPos;
     public int obstacleCount = 10;
 
+    private GameObject[] obstacleInstances;
+
 
     void Start()
     {
+        obstacleInstances = new GameObject[obstacleCount];
         InitializeObstacles();
     }
 
@@ -22,16 +25,13 @@ public class ObstacleManager : MonoBehaviour
     }
 
 
-    private float GetFlatDistance(Vector3 vectorA, Vector3 vectorB)
+    public GameObject[] GetObstacles()
     {
-        vectorA.y = 0;
-        vectorB.y = 0;
-
-        return Vector3.Distance(vectorA, vectorB);
+        return obstacleInstances;
     }
 
 
-    private void InitializeObstacles()
+    public void InitializeObstacles()
     {
         GameObject obstacleInstance;
         Vector3 obstaclePosition;
@@ -51,7 +51,28 @@ public class ObstacleManager : MonoBehaviour
             while (!IsPositionValid(obstaclePosition, 2.0f));
 
             obstacleInstance.transform.position = obstaclePosition;
+            obstacleInstances[obstacleIndex] = obstacleInstance;
         }
+    }
+
+
+    public void ResetObstacles()
+    {
+        for (int obstacleIndex = 0; obstacleIndex < obstacleCount; obstacleIndex++)
+        {
+            Destroy(obstacleInstances[obstacleIndex]);
+        }
+
+        InitializeObstacles();
+    }
+
+
+    private float GetFlatDistance(Vector3 vectorA, Vector3 vectorB)
+    {
+        vectorA.y = 0;
+        vectorB.y = 0;
+
+        return Vector3.Distance(vectorA, vectorB);
     }
 
 

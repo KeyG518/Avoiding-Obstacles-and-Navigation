@@ -26,10 +26,13 @@ public class UnityInputTeleop : MonoBehaviourRosNode
     private Publisher<geometry_msgs.msg.Twist> cmdVelPublisher;
     private geometry_msgs.msg.Twist cmdVelMsg;
 
+    private bool enableUserControl;
+
     protected override void StartRos()
     {
         cmdVelPublisher = node.CreatePublisher<geometry_msgs.msg.Twist>(CommandVelocityTopic);
         cmdVelMsg = new geometry_msgs.msg.Twist();
+        enableUserControl = true;
         StartCoroutine("PublishCommandVelocity");
     }
 
@@ -40,6 +43,11 @@ public class UnityInputTeleop : MonoBehaviourRosNode
             cmdVelPublisher.Publish(cmdVelMsg);
             yield return new WaitForSeconds(1.0f / PublishingFrequency);
         }
+    }
+
+    public void EnableUserControl(bool enable)
+    {
+        enableUserControl = enable;
     }
 
     public void MoveAngular(float k)
@@ -54,15 +62,18 @@ public class UnityInputTeleop : MonoBehaviourRosNode
 
     private void Update()
     {
-        cmdVelMsg.Linear.X = Input.GetAxis("Vertical") * MaxForwardVelocity;
-        if (UseHolonomicControls)
+        if (enableUserControl)
         {
-            cmdVelMsg.Linear.Y = -Input.GetAxis("Horizontal") * MaxSidewaysVelocity;
-            cmdVelMsg.Angular.Z = -Input.GetAxis("Turning") * MaxRotationalVelocity;
-        }
-        else
-        {
-            cmdVelMsg.Angular.Z = -Input.GetAxis("Horizontal") * MaxRotationalVelocity;
+            cmdVelMsg.Linear.X = Input.GetAxis("Vertical") * MaxForwardVelocity;
+            if (UseHolonomicControls)
+            {
+                cmdVelMsg.Linear.Y = -Input.GetAxis("Horizontal") * MaxSidewaysVelocity;
+                cmdVelMsg.Angular.Z = -Input.GetAxis("Turning") * MaxRotationalVelocity;
+            }
+            else
+            {
+                cmdVelMsg.Angular.Z = -Input.GetAxis("Horizontal") * MaxRotationalVelocity;
+            }
         }
     }
 }

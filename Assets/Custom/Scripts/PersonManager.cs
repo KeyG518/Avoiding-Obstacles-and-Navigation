@@ -11,10 +11,13 @@ public class PersonManager : MonoBehaviour
     public int personCount = 10;
     public float personSpeedVariation = 0.2f;
 
+    private GameObject[] personInstances;
+
 
     void Start()
     {
-        InitializePeople();
+        personInstances = new GameObject[personCount];
+        InitializePersons();
     }
 
 
@@ -23,16 +26,13 @@ public class PersonManager : MonoBehaviour
     }
 
 
-    private float GetFlatDistance(Vector3 vectorA, Vector3 vectorB)
+    public GameObject[] GetPersons()
     {
-        vectorA.y = 0;
-        vectorB.y = 0;
-
-        return Vector3.Distance(vectorA, vectorB);
+        return personInstances;
     }
 
 
-    private void InitializePeople()
+    public void InitializePersons()
     {
         GameObject personInstance;
         PersonController personController;
@@ -53,7 +53,30 @@ public class PersonManager : MonoBehaviour
 
             personController.SetTransformPosition(personPosition);
             personController.SetSpeed(Random.Range(personController.speed - personSpeedVariation, personController.speed + personSpeedVariation));
+
+            personInstances[personIndex] = personInstance;
         }
+    }
+
+
+    public void ResetPersons()
+    {
+        for (int personIndex = 0; personIndex < personCount; personIndex++)
+        {
+            Destroy(personInstances[personIndex]);
+        }
+
+        InitializePersons();
+    }
+
+
+
+    private float GetFlatDistance(Vector3 vectorA, Vector3 vectorB)
+    {
+        vectorA.y = 0;
+        vectorB.y = 0;
+
+        return Vector3.Distance(vectorA, vectorB);
     }
 
 

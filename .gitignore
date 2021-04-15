@@ -72,6 +72,7 @@ InitTestScene*.unity.meta
 InitTestScene*.unity
 
 # ML-Agents Logs
+Assets/ML-Agents/results/*
 Assets/ML-Agents/Timers/*
 
 # End of https://www.toptal.com/developers/gitignore/api/unity

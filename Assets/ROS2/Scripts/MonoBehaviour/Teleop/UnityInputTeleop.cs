@@ -45,6 +45,16 @@ public class UnityInputTeleop : MonoBehaviourRosNode
         }
     }
 
+    public float GetAngularVelocity()
+    {
+        return (float) cmdVelMsg.Angular.Z;
+    }
+
+    public float GetLinearVelocity()
+    {
+        return (float) cmdVelMsg.Linear.X;
+    }
+
     public void EnableUserControl(bool enable)
     {
         enableUserControl = enable;

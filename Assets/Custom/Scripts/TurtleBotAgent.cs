@@ -11,10 +11,11 @@ public class TurtleBotAgent : Agent
     public GameObject finalGoal, obstacleManagerObject, personManagerObject, rosInterface;
 
     private bool didHitBoundary, didHitObstacle, didHitPerson, didReachGoal;
+    private float maxGoalDistance;
     private ObstacleManager obstacleManager;
     private PersonManager personManager;
     private UnityInputTeleop unityRosInput;
-    private Vector3 spawnPosition;
+    private Vector3 spawnPosition, spawnRotation;
 
 
     void Start()
@@ -23,12 +24,14 @@ public class TurtleBotAgent : Agent
         didHitObstacle = false;
         didHitPerson = false;
         didReachGoal = false;
+        maxGoalDistance = Vector3.Distance(this.transform.position, finalGoal.transform.position);
 
         obstacleManager = obstacleManagerObject.GetComponent<ObstacleManager>();
         personManager = personManagerObject.GetComponent<PersonManager>();
         unityRosInput = rosInterface.GetComponent<UnityInputTeleop>();
 
         spawnPosition = this.transform.position;
+        spawnRotation = this.transform.rotation.eulerAngles;
     }
 
 
@@ -39,42 +42,46 @@ public class TurtleBotAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        GameObject[] obstacles = obstacleManager.GetObstacles();
-        GameObject[] persons = personManager.GetPersons();
+        // GameObject[] obstacles = obstacleManager.GetObstacles();
+        // GameObject[] persons = personManager.GetPersons();
 
-        foreach (GameObject obstacle in obstacles)
-        {
-            sensor.AddObservation(obstacle.transform.localPosition);
-        }
+        // for (int obstacleIndex = 0; obstacleIndex < obstacles.Length; obstacleIndex++)
+        // {
+        //     sensor.AddObservation(obstacles[obstacleIndex].transform.localPosition);
+        // }
 
-        foreach (GameObject person in persons)
-        {
-            sensor.AddObservation(person.transform.localPosition);
-        }
+        // for (int personIndex = 0; personIndex < persons.Length; personIndex++)
+        // {
+        //     sensor.AddObservation(persons[personIndex].transform.localPosition);
+        // }
 
-        sensor.AddObservation(finalGoal.transform.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(this.transform.localRotation.eulerAngles);
+        // sensor.AddObservation(finalGoal.transform.localPosition);
+        // sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(Vector3.Distance(this.transform.position, finalGoal.transform.position) / maxGoalDistance);
+        sensor.AddObservation(unityRosInput.GetAngularVelocity());
+        // sensor.AddObservation(unityRosInput.GetLinearVelocity());
     }
 
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         // Actions
-        float angular = Mathf.Clamp(actionBuffers.ContinuousActions[0], -1.0f, 1.0f);
-        float linear = Mathf.Clamp(actionBuffers.ContinuousActions[1], -1.0f, 1.0f);
+        float angularVelocity = Mathf.Clamp(actionBuffers.ContinuousActions[0], -1.0f, 1.0f);
+        float linearVelocity = 1.0f;
 
-        unityRosInput.MoveAngular(angular);
-        unityRosInput.MoveLinear(linear);
+        unityRosInput.MoveAngular(angularVelocity);
+        unityRosInput.MoveLinear(linearVelocity);
 
         // Rewards
         if (didHitBoundary)
         {
-            AddReward(-0.1f);
+            AddReward(-1.0f);
+            EndEpisode();
         }
         if (didHitObstacle)
         {
-            AddReward(-0.2f);
+            AddReward(-1.0f);
+            EndEpisode();
         }
         if (didHitPerson)
         {
@@ -83,11 +90,14 @@ public class TurtleBotAgent : Agent
         }
         if (didReachGoal)
         {
+            Debug.Log("Reached Goal!");
             AddReward(1.0f);
             EndEpisode();
         }
 
-        AddReward(-0.01f);
+        float currentDistance = Vector3.Distance(this.transform.position, finalGoal.transform.position);
+        float distanceReward = 0.01f * (maxGoalDistance - currentDistance) / maxGoalDistance;
+        AddReward(distanceReward);
     }
 
 
@@ -106,14 +116,15 @@ public class TurtleBotAgent : Agent
         unityRosInput.MoveLinear(0.0f);
 
         this.transform.position = spawnPosition;
+        this.transform.rotation = Quaternion.Euler(spawnRotation);
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        didHitBoundary = other.gameObject.CompareTag("Static Boundary");
-        didHitObstacle = other.gameObject.CompareTag("Static Obstacle");
-        didHitPerson = other.gameObject.CompareTag("Person");
-        didReachGoal = other.gameObject.CompareTag("Final Goal");
+        didHitBoundary = other.collider.gameObject.CompareTag("Static Boundary");
+        didHitObstacle = other.collider.gameObject.CompareTag("Static Obstacle");
+        didHitPerson = other.collider.gameObject.CompareTag("Person");
+        didReachGoal = other.collider.gameObject.CompareTag("Final Goal");
     }
 }

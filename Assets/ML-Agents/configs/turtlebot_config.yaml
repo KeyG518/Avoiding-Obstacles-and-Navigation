@@ -11,14 +11,14 @@ behaviors:
       num_epoch: 5
       learning_rate_schedule: linear
     network_settings:
-      normalize: false
+      normalize: true
       hidden_units: 512
       num_layers: 10
-      vis_encode_type: resnet
+      vis_encode_type: simple
     reward_signals:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-    max_steps: 500000
+    max_steps: 10000000
     time_horizon: 512
-    summary_freq: 1000
+    summary_freq: 10000

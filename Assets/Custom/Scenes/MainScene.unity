@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 12
+    VectorObservationSize: 6
     NumStackedVectorObservations: 10
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
-  m_ObservationStacks: 2
+  m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 0, g: 1, b: 0, a: 1}
   m_StartVerticalOffset: 0
@@ -1461,7 +1461,7 @@ PrefabInstance:
     - target: {fileID: 953006221594724443, guid: d7164a96e791b1b6e88234b8e4124ad9,
         type: 3}
       propertyPath: personCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 953006221594724443, guid: d7164a96e791b1b6e88234b8e4124ad9,
         type: 3}
@@ -1482,6 +1482,11 @@ PrefabInstance:
         type: 3}
       propertyPath: personMinPos.z
       value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 953006221594724443, guid: d7164a96e791b1b6e88234b8e4124ad9,
+        type: 3}
+      propertyPath: personSpeedVariation
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 953006221594724444, guid: d7164a96e791b1b6e88234b8e4124ad9,
         type: 3}
@@ -1565,7 +1570,7 @@ PrefabInstance:
     - target: {fileID: 1257695243315649657, guid: 1b7216e83143c33c886fe7a05d454126,
         type: 3}
       propertyPath: obstacleCount
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1257695243315649657, guid: 1b7216e83143c33c886fe7a05d454126,
         type: 3}

@@ -11,11 +11,11 @@ public class TurtleBotAgent : Agent
     public GameObject finalGoal, obstacleManagerObject, personManagerObject, rosInterface;
 
     private bool didHitBoundary, didHitObstacle, didHitPerson, didReachGoal;
-    private float maxGoalDistance;
+    private FinalGoalManager finalGoalManager;
     private ObstacleManager obstacleManager;
     private PersonManager personManager;
     private UnityInputTeleop unityRosInput;
-    private Vector3 spawnPosition, spawnRotation;
+    private Vector3 prevPosition, spawnPosition, spawnRotation;
 
 
     void Start()
@@ -24,12 +24,13 @@ public class TurtleBotAgent : Agent
         didHitObstacle = false;
         didHitPerson = false;
         didReachGoal = false;
-        maxGoalDistance = Vector3.Distance(this.transform.position, finalGoal.transform.position);
 
+        finalGoalManager = finalGoal.GetComponent<FinalGoalManager>();
         obstacleManager = obstacleManagerObject.GetComponent<ObstacleManager>();
         personManager = personManagerObject.GetComponent<PersonManager>();
         unityRosInput = rosInterface.GetComponent<UnityInputTeleop>();
 
+        prevPosition = this.transform.position;
         spawnPosition = this.transform.position;
         spawnRotation = this.transform.rotation.eulerAngles;
     }
@@ -42,8 +43,6 @@ public class TurtleBotAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(finalGoal.transform.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
         sensor.AddObservation(this.transform.InverseTransformPoint(finalGoal.transform.position));
         sensor.AddObservation(Vector3.Distance(this.transform.position, finalGoal.transform.position));
         sensor.AddObservation(unityRosInput.GetAngularVelocity());
@@ -63,34 +62,35 @@ public class TurtleBotAgent : Agent
         // Rewards
         if (didHitBoundary)
         {
-            // Debug.Log("Hit Boundary!");
             AddReward(-1.0f);
             EndEpisode();
         }
         else if (didHitObstacle)
         {
-            // Debug.Log("Hit Obstacle!");
             AddReward(-1.0f);
             EndEpisode();
         }
         else if (didHitPerson)
         {
-            // Debug.Log("Hit Person!");
             AddReward(-1.0f);
             EndEpisode();
         }
         else if (didReachGoal)
         {
-            // Debug.Log("Reached Goal!");
             AddReward(1.0f);
-            ResetFinalGoal();
+            finalGoalManager.InitializeFinalGoal();
+            didReachGoal = false;
         }
         else
         {
             float currentDistance = Vector3.Distance(this.transform.position, finalGoal.transform.position);
-            float distanceReward = 0.01f * (maxGoalDistance - currentDistance) / maxGoalDistance;
+            float prevDistance = Vector3.Distance(prevPosition, finalGoal.transform.position);
+            float distanceReward = currentDistance < prevDistance ? 0.01f : -0.02f;
+
             AddReward(distanceReward);
         }
+
+        prevPosition = this.transform.position;
     }
 
 
@@ -99,15 +99,17 @@ public class TurtleBotAgent : Agent
         didHitBoundary = false;
         didHitObstacle = false;
         didHitPerson = false;
+        didReachGoal = false;
 
         unityRosInput.EnableUserControl(false);
         unityRosInput.MoveAngular(0.0f);
         unityRosInput.MoveLinear(0.0f);
 
+        prevPosition = spawnPosition;
         this.transform.position = spawnPosition;
         this.transform.rotation = Quaternion.Euler(spawnRotation);
         
-        ResetFinalGoal();
+        finalGoalManager.InitializeFinalGoal();
         obstacleManager.ResetObstacles();
         personManager.ResetPersons();
     }
@@ -119,13 +121,5 @@ public class TurtleBotAgent : Agent
         didHitObstacle = other.gameObject.CompareTag("Static Obstacle");
         didHitPerson = other.gameObject.CompareTag("Person");
         didReachGoal = other.gameObject.CompareTag("Final Goal");
-    }
-
-
-    private void ResetFinalGoal()
-    {
-        finalGoal.GetComponent<FinalGoalManager>().InitializeFinalGoal();
-        maxGoalDistance = Vector3.Distance(this.transform.position, finalGoal.transform.position);
-        didReachGoal = false;
     }
 }

@@ -46,7 +46,15 @@ public class FinalGoalManager : MonoBehaviour
     private bool IsPositionValid(Vector3 position, float distanceThreshold)
     {
         GameObject player = GameObject.FindWithTag("Player");
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Static Obstacle");
+
         bool isValid =  GetFlatDistance(position, player.transform.position) > distanceThreshold;
+
+        foreach (GameObject obstacle in obstacles)
+        {
+            if (!isValid) break;
+            isValid = isValid && GetFlatDistance(position, obstacle.transform.position) > distanceThreshold;
+        }
 
         return isValid;
     }

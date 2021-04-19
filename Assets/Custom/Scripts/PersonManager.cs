@@ -6,8 +6,7 @@ using UnityEngine;
 public class PersonManager : MonoBehaviour
 {
     public GameObject person;
-    public Vector3 personMinPos;
-    public Vector3 personMaxPos;
+    public Vector3 personMinPos, personMaxPos;
     public int personCount = 10;
     public float personSpeedVariation = 0.2f;
 

@@ -6,8 +6,7 @@ using UnityEngine;
 public class ObstacleManager : MonoBehaviour
 {
     public GameObject[] obstacles;
-    public Vector3 obstacleMinPos;
-    public Vector3 obstacleMaxPos;
+    public Vector3 obstacleMinPos, obstacleMaxPos;
     public int obstacleCount = 10;
 
     private GameObject[] obstacleInstances;

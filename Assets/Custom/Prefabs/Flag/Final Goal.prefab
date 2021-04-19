@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8093402466664673224}
   - component: {fileID: 8093402466664673225}
+  - component: {fileID: 1303397585874982000}
   m_Layer: 0
   m_Name: Final Goal
   m_TagString: Final Goal
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8093402466664673230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: 0.5, z: 9}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8097401023211709649}
@@ -40,11 +41,25 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8093402466664673230}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1303397585874982000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093402466664673230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 571da49b07552fe368a34f19c075cf9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalGoalMinPos: {x: -4, y: 0, z: -4}
+  finalGoalMaxPos: {x: 4, y: 0, z: 4}
 --- !u!1001 &8093402465980906637
 PrefabInstance:
   m_ObjectHideFlags: 0

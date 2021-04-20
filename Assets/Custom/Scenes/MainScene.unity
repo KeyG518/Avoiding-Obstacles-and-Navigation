@@ -1259,6 +1259,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Final Goal
       objectReference: {fileID: 0}
+    - target: {fileID: 8093539355057212503, guid: a0b50a2bc7ff02907a19035a95c16ab9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8194073440912200497, guid: a0b50a2bc7ff02907a19035a95c16ab9,
         type: 3}
       propertyPath: m_AABB.m_Center.y

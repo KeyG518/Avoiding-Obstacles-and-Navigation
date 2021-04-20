@@ -32,6 +32,9 @@ public class ObstacleManager : MonoBehaviour
 
     public void InitializeObstacles()
     {
+        GameObject finalGoal = GameObject.FindWithTag("Final Goal");
+        GameObject player = GameObject.FindWithTag("Player");
+
         GameObject obstacleInstance;
         Vector3 obstaclePosition;
         int randomIndex;
@@ -47,7 +50,7 @@ public class ObstacleManager : MonoBehaviour
                 positionZ = Random.Range(obstacleMinPos.z, obstacleMaxPos.z);
                 obstaclePosition = new Vector3(positionX, obstacleInstance.transform.position.y, positionZ);
             }
-            while (!IsPositionValid(obstaclePosition, 2.0f));
+            while (!IsPositionValid(finalGoal, player, obstaclePosition, 2.0f));
 
             obstacleInstance.transform.position = obstaclePosition;
             obstacleInstances[obstacleIndex] = obstacleInstance;
@@ -75,11 +78,8 @@ public class ObstacleManager : MonoBehaviour
     }
 
 
-    private bool IsPositionValid(Vector3 position, float distanceThreshold)
+    private bool IsPositionValid(GameObject finalGoal, GameObject player, Vector3 position, float distanceThreshold)
     {
-        GameObject finalGoal = GameObject.FindWithTag("Final Goal");
-        GameObject player = GameObject.FindWithTag("Player");
-
         bool isValid =  GetFlatDistance(position, finalGoal.transform.position) > distanceThreshold;
         isValid = isValid && GetFlatDistance(position, player.transform.position) > distanceThreshold;
 

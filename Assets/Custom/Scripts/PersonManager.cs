@@ -33,6 +33,10 @@ public class PersonManager : MonoBehaviour
 
     public void InitializePersons()
     {
+        GameObject finalGoal = GameObject.FindWithTag("Final Goal");
+        GameObject player = GameObject.FindWithTag("Player");
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Static Obstacle");
+
         GameObject personInstance;
         PersonController personController;
         Vector3 personPosition;
@@ -48,7 +52,7 @@ public class PersonManager : MonoBehaviour
                 positionZ = Random.Range(personMinPos.z, personMaxPos.z);
                 personPosition = new Vector3(positionX, personInstance.transform.position.y, positionZ);
             }
-            while (!IsPositionValid(personPosition, 2.0f));
+            while (!IsPositionValid(finalGoal, player, obstacles, personPosition, 2.0f));
 
             personController.SetTransformPosition(personPosition);
             personController.SetSpeed(Random.Range(personController.speed - personSpeedVariation, personController.speed + personSpeedVariation));
@@ -79,12 +83,8 @@ public class PersonManager : MonoBehaviour
     }
 
 
-    private bool IsPositionValid(Vector3 position, float distanceThreshold)
+    private bool IsPositionValid(GameObject finalGoal, GameObject player, GameObject[] obstacles, Vector3 position, float distanceThreshold)
     {
-        GameObject finalGoal = GameObject.FindWithTag("Final Goal");
-        GameObject player = GameObject.FindWithTag("Player");
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Static Obstacle");
-
         bool isValid =  GetFlatDistance(position, finalGoal.transform.position) > distanceThreshold;
         isValid = isValid && GetFlatDistance(position, player.transform.position) > distanceThreshold;
 

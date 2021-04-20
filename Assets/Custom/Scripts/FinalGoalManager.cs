@@ -20,6 +20,9 @@ public class FinalGoalManager : MonoBehaviour
 
     public void InitializeFinalGoal()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Static Obstacle");
+
         float positionX, positionZ;
         Vector3 finalGoalPosition;
 
@@ -28,7 +31,7 @@ public class FinalGoalManager : MonoBehaviour
             positionZ = Random.Range(finalGoalMinPos.z, finalGoalMaxPos.z);
             finalGoalPosition = new Vector3(positionX, this.transform.position.y, positionZ);
         }
-        while (!IsPositionValid(finalGoalPosition, 2.0f));
+        while (!IsPositionValid(player, obstacles, finalGoalPosition, 2.0f));
 
         this.transform.position = finalGoalPosition;
     }
@@ -43,11 +46,8 @@ public class FinalGoalManager : MonoBehaviour
     }
 
 
-    private bool IsPositionValid(Vector3 position, float distanceThreshold)
+    private bool IsPositionValid(GameObject player, GameObject[] obstacles, Vector3 position, float distanceThreshold)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Static Obstacle");
-
         bool isValid =  GetFlatDistance(position, player.transform.position) > distanceThreshold;
 
         foreach (GameObject obstacle in obstacles)

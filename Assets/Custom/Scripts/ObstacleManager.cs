@@ -50,7 +50,7 @@ public class ObstacleManager : MonoBehaviour
                 positionZ = Random.Range(obstacleMinPos.z, obstacleMaxPos.z);
                 obstaclePosition = new Vector3(positionX, obstacleInstance.transform.position.y, positionZ);
             }
-            while (!IsPositionValid(finalGoal, player, obstaclePosition, 2.0f));
+            while (!IsPositionValid(finalGoal, player, obstaclePosition, 1.0f, 2.0f, 1.0f));
 
             obstacleInstance.transform.position = obstaclePosition;
             obstacleInstances[obstacleIndex] = obstacleInstance;
@@ -78,10 +78,19 @@ public class ObstacleManager : MonoBehaviour
     }
 
 
-    private bool IsPositionValid(GameObject finalGoal, GameObject player, Vector3 position, float distanceThreshold)
+    private bool IsPositionValid(GameObject finalGoal, GameObject player, Vector3 position, float finalGoalThreshold, float playerThreshold, float obstacleThreshold)
     {
-        bool isValid =  GetFlatDistance(position, finalGoal.transform.position) > distanceThreshold;
-        isValid = isValid && GetFlatDistance(position, player.transform.position) > distanceThreshold;
+        bool isValid = GetFlatDistance(position, finalGoal.transform.position) > finalGoalThreshold;
+        isValid = isValid && GetFlatDistance(position, player.transform.position) > playerThreshold;
+
+        foreach (GameObject obstacle in obstacleInstances)
+        {
+            if (!isValid) break;
+            if (obstacle)
+            {
+                isValid = isValid && GetFlatDistance(position, obstacle.transform.position) > obstacleThreshold;
+            }
+        }
 
         return isValid;
     }

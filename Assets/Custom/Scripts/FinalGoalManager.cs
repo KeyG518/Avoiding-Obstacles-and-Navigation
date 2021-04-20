@@ -31,7 +31,7 @@ public class FinalGoalManager : MonoBehaviour
             positionZ = Random.Range(finalGoalMinPos.z, finalGoalMaxPos.z);
             finalGoalPosition = new Vector3(positionX, this.transform.position.y, positionZ);
         }
-        while (!IsPositionValid(player, obstacles, finalGoalPosition, 2.0f));
+        while (!IsPositionValid(player, obstacles, finalGoalPosition, 2.0f, 1.0f));
 
         this.transform.position = finalGoalPosition;
     }
@@ -46,14 +46,14 @@ public class FinalGoalManager : MonoBehaviour
     }
 
 
-    private bool IsPositionValid(GameObject player, GameObject[] obstacles, Vector3 position, float distanceThreshold)
+    private bool IsPositionValid(GameObject player, GameObject[] obstacles, Vector3 position, float playerThreshold, float obstacleThreshold)
     {
-        bool isValid =  GetFlatDistance(position, player.transform.position) > distanceThreshold;
+        bool isValid = GetFlatDistance(position, player.transform.position) > playerThreshold;
 
         foreach (GameObject obstacle in obstacles)
         {
             if (!isValid) break;
-            isValid = isValid && GetFlatDistance(position, obstacle.transform.position) > distanceThreshold;
+            isValid = isValid && GetFlatDistance(position, obstacle.transform.position) > obstacleThreshold;
         }
 
         return isValid;

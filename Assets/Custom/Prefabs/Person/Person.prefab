@@ -24,7 +24,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6433315170588248159}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72b96eaeaa4ba420b0e00b92b64082b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundaryDistanceThreshold: 2
+  boundaryDistanceThreshold: 1
   obstacleDistanceThreshold: 1
   targetDistanceThreshold: 0.5
   speed: 1

@@ -10,20 +10,17 @@ public class PersonController : MonoBehaviour
     public float targetDistanceThreshold = 1.0f;
     public float speed = 1.0f;
     public float rotationSpeed = 1.0f;
+    public float candidateAngleOffset = 20.0f;
+    public float candidateDistanceThreshold = 5.0f;
+    public float maxRaycastHitDistance = 50.0f;
+    public float raycastSphereRadius = 0.5f;
 
-    private float candidateAngleOffset, candidateDistanceThreshold;
-    private float maxRaycastHitDistance, raycastSphereRadius;
     private bool isTargetLocked;
     private Vector3 currentTargetPosition;
 
 
     void Start()
     {
-        candidateAngleOffset = 10.0f;
-        candidateDistanceThreshold = 5.0f;
-        maxRaycastHitDistance = 50.0f;
-        raycastSphereRadius = 0.5f;
-
         currentTargetPosition = GetNextTargetPosition(transform);
         isTargetLocked = false;
     }

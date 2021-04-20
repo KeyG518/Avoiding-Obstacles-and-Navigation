@@ -66,6 +66,10 @@ MonoBehaviour:
   targetDistanceThreshold: 0.5
   speed: 1
   rotationSpeed: 3
+  candidateAngleOffset: 20
+  candidateDistanceThreshold: 5
+  maxRaycastHitDistance: 20
+  raycastSphereRadius: 0.5
 --- !u!1001 &6162846090992710926
 PrefabInstance:
   m_ObjectHideFlags: 0

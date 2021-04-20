@@ -115,11 +115,11 @@ public class TurtleBotAgent : Agent
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        didHitBoundary = other.gameObject.CompareTag("Static Boundary");
-        didHitObstacle = other.gameObject.CompareTag("Static Obstacle");
-        didHitPerson = other.gameObject.CompareTag("Person");
-        didReachGoal = other.gameObject.CompareTag("Final Goal");
+        didHitBoundary = other.collider.gameObject.CompareTag("Static Boundary");
+        didHitObstacle = other.collider.gameObject.CompareTag("Static Obstacle");
+        didHitPerson = other.collider.gameObject.CompareTag("Person");
+        didReachGoal = other.collider.gameObject.CompareTag("Final Goal");
     }
 }

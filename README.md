@@ -1,9 +1,9 @@
 # CMPT 720 - Final Project
 
 ## Group Members:
-* Cong Yuan 301409283 (cong_yaun)
+* Cong Yuan 301409283 (cong_yuan)
 * Luciano Oliveira 301393900 (loliveir)  
-* Oleksandr Volkanov 301308828 (avolkanov)  
+* Oleksandr Volkanov 301308828 (avolkano)  
 * Yu Guo 301265589 (yu_guo_4)
 
 ## Setup

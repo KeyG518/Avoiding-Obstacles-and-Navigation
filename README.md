@@ -22,4 +22,4 @@ Please follow the ML-Agents installation instructions found here (https://github
 
 ## Video Preview
 
-[Simple Model Preview](simple_model.mp4)
+[![Demo](https://img.youtube.com/vi/BKYtdzxB5iA/0.jpg)](https://www.youtube.com/watch?v=BKYtdzxB5iA&t=6s&ab_channel=YuGuo)

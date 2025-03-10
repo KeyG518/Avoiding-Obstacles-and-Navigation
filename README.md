@@ -20,5 +20,6 @@ Please follow the ML-Agents installation instructions found here (https://github
 5. B) If using an enhanced model, make sure that in the "Ray Perception Sensor 3D" component, the "Rays Per Direction" and the "Stacked Raycasts" are set to 20 and 10 respectively.
 6. Both the simple and the enhanced model files can be found in the "Assets/ML-Agents/Models" folder.
 
-## Supplementary Materials
-The copy of the project report and the demo videos can be found in the "Supplementary Materials" root folder.
+## Video Preview
+
+[Simple Model Preview](simple_model.mp4)
